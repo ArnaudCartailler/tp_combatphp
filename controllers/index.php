@@ -25,18 +25,18 @@ $userManager = new UserManager(Database::DB());
 // On passe en argument un tableau associatif
 // L'objet n'est pas encore enregistré en base de données. Il existe uniquement dans notre code PHP
 
-$newUser = new User([
-    "pseudo" => "Albert"
-]);
+// $newUser = new User([
+//     "pseudo" => "Albert"
+// ]);
 
 // C'est notre manager qui se charge d'enregistrer notre nouvel objet $newUser en base de données
 
-$userManager->addUser($newUser);
+$userManager->addUser($newFighter);
 
 // On récupère tous les users de la base de données grâce à notre manager
 // On les stocke dans la variable $users
 
-$users = $userManager->getUsers();
+// $users = $userManager->getUsers();
 
 // On appelle enfin notre vue pour afficher nos users
 

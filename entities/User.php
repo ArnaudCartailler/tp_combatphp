@@ -4,8 +4,13 @@ declare(strict_types = 1);
 
 class User
 {
-    protected   $pseudo,
-                $id;
+    protected   $id,
+                $pseudo,
+                $damage;
+
+
+        const FIGHTER_HIT = 1;
+        const FIGHTER_DEAD = 2;
 
     public function __construct(array $array)
     {
@@ -27,6 +32,18 @@ class User
             }
         }
     }
+
+    public function Hit(){
+        
+    $this->damage += 5;
+
+    if ($this->damage >=100){
+
+        return self::FIGHTER_DEAD;
+
+    }
+        return self::FIGHTER_HIT;
+    }   
 
     // Setters
     
@@ -57,6 +74,19 @@ class User
         return $this;
     }
 
+    /**
+     *Set the value of damage
+     *
+     * @param integer $damage
+     * @return void
+     */
+
+     public function setDamage(int $damage)
+    {
+        $this->damage = $damage;
+        return $this;
+    }
+
     // Getters
 
     /**
@@ -74,5 +104,10 @@ class User
     public function getPseudo()
     {
         return $this->pseudo;
+    }
+
+      public function getDamage()
+    {
+        return $this->damage;
     }
 }
