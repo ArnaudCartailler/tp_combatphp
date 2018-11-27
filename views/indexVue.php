@@ -11,24 +11,53 @@
   </form>
 
   <?php
+  
   // On boucle sur notre tableau $users qui contient tous les objets User créés à partir de la base de données
   
-  foreach($users as $user){
+  foreach($fighters as $user){
+
  ?>
 
   <p>
-    Pseudo : <?php echo $fighter->getPseudo(); ?>
+    Pseudo : <?php echo $user->getPseudo(); ?>
   </p>
 
   <p>
-    Health: <?php echo $fighter->getDamage(); ?>
+    Health: <?php echo $user->getDamage(); ?>
   </p>
+
+
+
+    <fieldset>
+
+      <legend>Qui frapper ?</legend>
+      <p>
+<?php
+
+$fighters = $userManager->getUsers($user->getPseudo());
+
+if (empty($fighters))
+{
+  echo 'Personne à frapper !';
+}
+
+else
+
+{
+
+  foreach ($fighters as $user)
+    echo '<a href="?frapper=', $user->id(), '">', htmlspecialchars($user->pseudo()), '</a> (damage : ', $user->damage(), ')<br />';
+}
+
+?>
+      </p>
+    </fieldset>
 
 
 <?php
 
   }
-  
+
    include("template/footer.php");
  
 ?>

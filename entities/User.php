@@ -2,8 +2,8 @@
 
 declare(strict_types = 1);
 
-class User
-{
+class User{
+
     protected   $id,
                 $pseudo,
                 $damage;
@@ -54,7 +54,7 @@ class User
      * @return  self
      */ 
 
-    public function setId( $id)
+    public function setId($id)
     {
         $id = (int) $id;
         $this->id = $id;
@@ -78,11 +78,12 @@ class User
      *Set the value of damage
      *
      * @param integer $damage
-     * @return void
+     * 
      */
 
-     public function setDamage(int $damage)
+     public function setDamage($damage)
     {
+        $damage = (int) $damage;
         $this->damage = $damage;
         return $this;
     }
@@ -106,6 +107,10 @@ class User
         return $this->pseudo;
     }
 
+    /**
+     * Get the valie of the damage
+     *
+     */
       public function getDamage()
     {
         return $this->damage;
