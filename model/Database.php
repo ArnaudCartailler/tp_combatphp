@@ -12,7 +12,7 @@ class Database
 const HOST  = "localhost";
 const DBNAME = "combat"; // votre base de données
 const LOGIN = "root"; // votre login
-const PWD = "soleil1993"; // votre mot de passe
+const PWD = ""; // votre mot de passe
 
   /**
    * Function to connect to the DB
