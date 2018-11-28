@@ -10,9 +10,9 @@ class Database
 
 // connection settings
 const HOST  = "localhost";
-const DBNAME = "correction_combat"; // votre base de données
-const LOGIN = "root"; // votre login
-const PWD = "soleil1993"; // votre mot de passe
+const DBNAME = ""; // votre base de données
+const LOGIN = ""; // votre login
+const PWD = ""; // votre mot de passe
 
   /**
    * Function to connect to the DB

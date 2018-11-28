@@ -1,7 +1,6 @@
 <?php
 
 // On enregistre notre autoload.
-
 function chargerClasse($classname)
 {
     if(file_exists('../model/'. $classname.'.php'))
@@ -13,41 +12,55 @@ function chargerClasse($classname)
         require '../entities/' . $classname . '.php';
     }
 }
-
 spl_autoload_register('chargerClasse');
 
-// On instancie un manager pour nos users
-// En argument, on lui passe l'objet PDO retourné par la méthode DB(), de la classe Database
-
-$userManager = new UserManager(Database::DB());
-
-// On instancie la classe User pour créer un nouvel objet $newUser
-// On passe en argument un tableau associatif
-// L'objet n'est pas encore enregistré en base de données. Il existe uniquement dans notre code PHP
+session_start();
 
 
-if (isset($_POST['pseudo']) AND !empty($_POST['pseudo'])){
+$db = Database::DB();
 
-$fighters = new User(['pseudo' => $_POST['pseudo'], 'damage' => 0]);
+$characterManager = new CharacterManager($db); 
 
-$userManager->addUser($fighters);
+if (!isset($_SESSION['character'])){
 
-} elseif (!is_string($_POST['pseudo'])){
+    header('Location: connexion.php');      
 
-    echo 'Mets un vrai pseudo omg';
+}
+    else
+    {
+        $character = $_SESSION['character'];
+    }
 
-};
+if(isset($_GET['id']))
+{
+    $id = (int) $_GET['id'];
 
-// C'est notre manager qui se charge d'enregistrer notre nouvel objet $newUser en base de données
+    $opponent = $characterManager->getCharacter($id);
+    $response = $character->attack($opponent);
 
+    switch($response){
+        case Character::ITS_ME:
+            $message = "Tu te frappes ?!";
+            break;
+        case Character::HIT:
+            $message = "L'adversaire a été touché !";
+            $characterManager->update($opponent);
+            break;
+        case Character::KILL:
+            $message = "L'ennemi est mort !";
+            $characterManager->delete($opponent);
+            break;
+    }
+} 
+elseif (isset($_POST['logout']))
+{
+    session_destroy();
+    header('Location : connexion.php');
+    exit();
+}
 
-// On récupère tous les users de la base de données grâce à notre manager
-// On les stocke dans la variable $users
+$characters = $characterManager->getCharacters();
 
-$fighters = $userManager->getUsers();
+include "../views/indexView.php";
 
-// On appelle enfin notre vue pour afficher nos users
-
-include "../views/indexVue.php";
-
- ?>
+?>
